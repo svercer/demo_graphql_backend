@@ -1,0 +1,49 @@
+type Book {
+    id: ID!
+    name: String!
+}
+
+
+type UsersResponse {
+    data: [User!]
+    meta: MetaData
+}
+
+type MetaData {
+    totalItems: Int
+    currentPage: Int
+    pageSize: Int
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+}
+
+union Response = SuccessResponse | ErrorResponse
+
+type SuccessResponse {
+    success: Boolean!
+    message: String!
+}
+
+type ErrorResponse {
+    error: String!
+    message: String!
+}
+
+type DeleteUserResponse {
+    success: Boolean
+    message: String
+}
+
+type Mutation {
+    updateUser(id: ID!, name: String, email:String): User
+    deleteUser(id: ID!): DeleteUserResponse
+    createUser(email: String!, name: String!): User
+}
+
+type Query {
+    users(pageSize: String, page: Int): UsersResponse
+    user(id: ID!): User
+}
