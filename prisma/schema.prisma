@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -18,7 +19,7 @@ model Book {
   id     Int    @id @default(autoincrement())
   name   String
   userId Int
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_Book_User")
 
   @@index([userId], map: "Book_userId_fkey")
 }

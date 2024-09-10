@@ -12,7 +12,9 @@ export const userQueries = {
         skip: skip,
         take: Number(args.pageSize ?? 50)
     })
-    const totalItems = await db.user.count()
+
+
+      const totalItems = await db.user.count()
 
     return {
         data: users,

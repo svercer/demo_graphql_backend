@@ -18,11 +18,6 @@ app.use(cors({
 
 app.use(express.json())
 
-// const typeDefs = gql(
-//     readFileSync(path.join(__dirname, 'graphql/schemas', 'schema.graphql'), {
-//         encoding: "utf-8",
-//     })
-// );
 const schemaFiles = [
     path.join(__dirname, 'graphql/schemas', 'user.graphql'),
     path.join(__dirname, 'graphql/schemas', 'schema.graphql')
