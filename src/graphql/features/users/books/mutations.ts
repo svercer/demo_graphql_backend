@@ -1,22 +1,75 @@
 import db from '../../../../lib/db'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import {Book} from "@prisma/client";
 
 export const userBooksMutations = {
-    createBook: async (_: any, args: { name: string, userId: number }) => {
-        return db.book.create({
-            data: {
-                name: args.name,
-                userId: Number(args.userId)
-            }
-        })
+    createBook: async (_: any, args: { name: string, userId: number, price: string }) => {
+
+        try {
+
+
+            // return  await db.book.create({
+            //     data: {
+            //         name: args.name,
+            //         userId: Number(args.userId),
+            //         prices: {
+            //             create: {
+            //                 amount: args.price
+            //             }
+            //         }
+            //     },
+            // })
+
+            await db.$transaction(async () => {
+                const book = await db.book.create({
+                    data: {
+                        name: args.name,
+                        userId: Number(args.userId),
+                    },
+                })
+
+
+                await db.price.create({
+                    data: {
+                        amount: args.price,
+                        bookId: book.id
+                    }
+                })
+            })
+
+
+
+        } catch (e) {
+            console.log('e', e)
+
+        }
+
+
+
+
+
+
+
+
+
     },
 
-    updateBook: async (_: any, args: { id: number,  name: string }) => {
-        return  db.book.update({
-            data: {
-                name: args.name,
-            },
-            where: { id: Number(args.id) }
+    updateBook: async (_: any, args: { id: number,  name: string, price: string }) => {
+
+        await db.$transaction(async () => {
+            const book = await db.book.update({
+                data: {
+                    name: args.name,
+                },
+                where: { id: Number(args.id) },
+            })
+
+            await db.price.create({
+                data: {
+                    amount: args.price,
+                    bookId: book.id
+                }
+            })
         })
     },
 

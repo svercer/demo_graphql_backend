@@ -32,7 +32,11 @@ export const userQueries = {
         return db.user.findFirst({
             where: {id: Number(args.id)},
             include: {
-                books: true,
+                books: {
+                    include: {
+                        prices: true
+                    }
+                },
             },
         });
     },
