@@ -20,6 +20,13 @@ model Book {
   name   String
   userId Int
   User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_Book_User")
+  prices Price[]
 
   @@index([userId], map: "Book_userId_fkey")
+}
+
+model Price {
+  id Int @id @default(autoincrement())
+  bookId Int
+  Book Book @relation(fields: [bookId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

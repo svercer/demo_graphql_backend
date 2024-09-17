@@ -1,5 +1,6 @@
 import { userMutations } from "./features/users/mutations";
 import { userQueries } from "./features/users/queries";
+import {userBooksMutations} from "./features/users/books/mutations";
 
 export const resolvers = {
     Record: {
@@ -9,8 +10,10 @@ export const resolvers = {
         ...userQueries
     },
     Mutation: {
-        ...userMutations
+        ...userMutations,
+        ...userBooksMutations
     },
+
 };
 
 export default resolvers;

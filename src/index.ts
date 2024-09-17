@@ -32,10 +32,6 @@ const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
 });
 
-// Note you must call `start()` on the `ApolloServer`
-// instance before passing the instance to `expressMiddleware`
-
-// app.use(loggingMiddleware)
 
 const startServer = async () => {
     

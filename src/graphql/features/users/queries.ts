@@ -36,4 +36,17 @@ export const userQueries = {
             },
         });
     },
+
+    books: async (parent: any) => {
+        try {
+            return await db.book.findMany({
+                where: {
+                    id: parent.id
+                }
+            })
+        } catch (e) {
+            console.log('e', e)
+
+        }
+    }
 }
