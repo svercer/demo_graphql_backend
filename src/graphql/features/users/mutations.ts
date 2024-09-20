@@ -1,7 +1,7 @@
 import db from '../../../lib/db'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-export const userMutations = {
+export const userMutationsResolvers = {
   createUser: async (_: any, args: { email: string, name: string }) => {
    return db.user.create({
       data: args

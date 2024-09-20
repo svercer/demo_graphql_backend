@@ -1,17 +1,14 @@
-import { userMutations } from "./features/users/mutations";
-import { userQueries } from "./features/users/queries";
-import {userBooksMutations} from "./features/users/books/mutations";
+import { userMutationsResolvers } from "./features/users/mutations";
+import { userQueriesResolvers } from "./features/users/queries";
+import {userBooksMutationsResolvers} from "./features/users/books/mutations";
 
 export const resolvers = {
-    Record: {
-        id: (parent: any) => parent.id ?? parent._id,
-    },
     Query: {
-        ...userQueries
+        ...userQueriesResolvers
     },
     Mutation: {
-        ...userMutations,
-        ...userBooksMutations
+        ...userMutationsResolvers,
+        ...userBooksMutationsResolvers
     },
 
 };

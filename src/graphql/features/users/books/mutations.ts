@@ -2,7 +2,7 @@ import db from '../../../../lib/db'
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import {Book} from "@prisma/client";
 
-export const userBooksMutations = {
+export const userBooksMutationsResolvers = {
     createBook: async (_: any, args: { name: string, userId: number, price: string }) => {
 
         try {

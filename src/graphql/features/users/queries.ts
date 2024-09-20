@@ -1,7 +1,7 @@
 import db from "../../../lib/db";
 import {GraphQLResolveInfo} from "graphql/type";
 
-export const userQueries = {
+export const userQueriesResolvers = {
     users: async (parent: any, args: {
         pageSize: string,
         page: number
