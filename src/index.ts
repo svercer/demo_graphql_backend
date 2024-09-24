@@ -20,7 +20,6 @@ app.use(cors({
 }))
 
 app.use(express.json())
-
 // Case1
 // const schemaFiles = [
 //     path.join(__dirname, 'graphql/schemas', 'user.graphql'),
@@ -47,12 +46,15 @@ const startServer = async () => {
 
     await server.start();
 
-    
     app.use(
         '/graphql',
         cors(),
         express.json(),
-        expressMiddleware(server),
+        expressMiddleware(server, {
+            context: async ({req, res}) => {
+                // token
+            }
+        }),
     );
     app.listen(PORT, () => {
         console.log(`Server is running on ${PORT}`);
