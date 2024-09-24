@@ -41,7 +41,7 @@ export const userQueriesResolvers = {
         });
     },
 
-    books: async (parent: any) => {
+    userBooks: async (parent: any) => {
         try {
             return await db.book.findMany({
                 where: {

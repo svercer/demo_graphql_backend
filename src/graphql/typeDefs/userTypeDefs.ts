@@ -11,4 +11,12 @@ export const userTypeDefs = `#graphql
         email: String!
         books: [Book!]
     }
+
+    type Query {
+        users(pageSize: String, page: Int): UsersResponse
+        user(id: ID!): User
+        userBooks: [Book!]
+        books: [Book!]
+        book(id: ID!): Book!
+    }
 `

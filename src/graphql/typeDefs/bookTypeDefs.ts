@@ -63,8 +63,7 @@ export const bookTypeDefs = `#graphql
     }
     
     type Query {
-        users(pageSize: String, page: Int): UsersResponse
-        user(id: ID!): User
         books: [Book!]
+        book(id: ID!): Book!
     }
 `
