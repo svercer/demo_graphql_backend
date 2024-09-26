@@ -12,7 +12,6 @@ export const resolvers = {
         ...userMutationsResolvers,
         ...userBooksMutationsResolvers
     },
-
 };
 
 export default resolvers;

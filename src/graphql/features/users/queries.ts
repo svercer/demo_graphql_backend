@@ -28,7 +28,8 @@ export const userQueriesResolvers = {
             }
         }
     },
-    user: async (_: any, args: { id: number }) => {
+
+    user: async (_: any, args: { id: number },) => {
         return db.user.findFirst({
             where: {id: Number(args.id)},
             include: {

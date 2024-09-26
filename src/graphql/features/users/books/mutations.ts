@@ -4,54 +4,39 @@ import {Book} from "@prisma/client";
 
 export const userBooksMutationsResolvers = {
     createBook: async (_: any, args: { name: string, userId: number, price: string }) => {
-
         try {
-
-
-            // return  await db.book.create({
-            //     data: {
-            //         name: args.name,
-            //         userId: Number(args.userId),
-            //         prices: {
-            //             create: {
-            //                 amount: args.price
-            //             }
-            //         }
-            //     },
-            // })
-
-            await db.$transaction(async () => {
-                const book = await db.book.create({
-                    data: {
-                        name: args.name,
-                        userId: Number(args.userId),
-                    },
-                })
-
-
-                await db.price.create({
-                    data: {
-                        amount: args.price,
-                        bookId: book.id
+            return await db.book.create({
+                data: {
+                    name: args.name,
+                    userId: Number(args.userId),
+                    prices: {
+                        create: {
+                            amount: args.price
+                        }
                     }
-                })
+                },
             })
 
-
+            // await db.$transaction(async () => {
+            //     const book = await db.book.create({
+            //         data: {
+            //             name: args.name,
+            //             userId: Number(args.userId),
+            //         },
+            //     })
+            //
+            //     await db.price.create({
+            //         data: {
+            //             amount: args.price,
+            //             bookId: book.id
+            //         }
+            //     })
+            // })
+            // return book
 
         } catch (e) {
             console.log('e', e)
-
         }
-
-
-
-
-
-
-
-
-
     },
 
     updateBook: async (_: any, args: { id: number,  name: string, price: string }) => {

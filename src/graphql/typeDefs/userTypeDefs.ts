@@ -1,3 +1,4 @@
+// noinspection GraphQLTypeRedefinition
 export const userTypeDefs = `#graphql
     interface Character {
         appearsIn: String
@@ -16,7 +17,6 @@ export const userTypeDefs = `#graphql
         users(pageSize: String, page: Int): UsersResponse
         user(id: ID!): User
         userBooks: [Book!]
-        books: [Book!]
-        book(id: ID!): Book!
     }
+
 `

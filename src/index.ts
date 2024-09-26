@@ -25,21 +25,20 @@ app.use(express.json())
 //     path.join(__dirname, 'graphql/schemas', 'user.graphql'),
 //     path.join(__dirname, 'graphql/schemas', 'schema.graphql')
 // ];
-
+//
 // Read and concatenate all schema files
 // const typeDefs = gql(
 //     schemaFiles.map(file => readFileSync(file, { encoding: 'utf-8' })).join('\n')
 // );
-
+//
 // const server = new ApolloServer({
 //     schema: buildSubgraphSchema({ typeDefs, resolvers }),
 // });
-
-
 // Case 2
+
 const server = new ApolloServer({
     typeDefs: mergedTypeDefs,
-    resolvers: resolvers
+    resolvers: resolvers,
 });
 
 const startServer = async () => {
@@ -53,6 +52,15 @@ const startServer = async () => {
         expressMiddleware(server, {
             context: async ({req, res}) => {
                 // token
+
+
+                return {
+                    authenticated: 'isAuthenticated',
+                    user: {
+                        id: 1,
+                        name: "Stole"
+                    }
+                }
             }
         }),
     );

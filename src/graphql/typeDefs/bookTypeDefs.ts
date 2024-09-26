@@ -9,6 +9,7 @@ export const bookTypeDefs = `#graphql
         id: ID!
         name: String!
         prices: [Price]
+        user: User
     }
     
     type UsersResponse {
@@ -64,6 +65,6 @@ export const bookTypeDefs = `#graphql
     
     type Query {
         books: [Book!]
-        book(id: ID!): Book!
+        book(id: ID!): Book
     }
 `

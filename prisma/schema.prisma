@@ -19,10 +19,8 @@ model Book {
   id     Int    @id @default(autoincrement())
   name   String
   userId Int
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_Book_User")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   prices Price[]
-
-  @@index([userId], map: "Book_userId_fkey")
 }
 
 model Price {
@@ -30,4 +28,9 @@ model Price {
   bookId Int
   amount String
   Book Book @relation(fields: [bookId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Fruits {
+  id Int @id @default(autoincrement())
+  name String
 }
