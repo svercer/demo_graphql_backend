@@ -2,16 +2,19 @@
 
 import express, {NextFunction, Request, Response} from 'express'
 import cors from 'cors'
-
 import {ApolloServer} from "@apollo/server";
 import {readFileSync} from "node:fs";
+import db from '../src/lib/db'
 import gql from "graphql-tag";
 import {buildSubgraphSchema} from '@apollo/subgraph'
 import {expressMiddleware} from "@apollo/server/express4";
 import resolvers from "./graphql/resolvers";
 import * as path from "node:path";
 import mergedTypeDefs from "./graphql/typeDefs";
+import * as process from "process";
+import jwt, {JwtPayload} from "jsonwebtoken";
 
+console.log('process.env.PORT', process.env.PORT)
 
 const PORT = process.env.PORT ?? 4000
 const app = express()
@@ -41,6 +44,27 @@ const server = new ApolloServer({
     resolvers: resolvers,
 });
 
+const getUserFromToken = async (token: string) => {
+    try {
+        if (token) {
+            const decoded: JwtPayload | string = await jwt.verify(token, process.env.JWT_SECRET ?? '');
+            if (typeof decoded !== 'string') {
+                const user = await db.user.findUnique({
+                    where: {
+                        id: decoded.userId
+                    }
+                })
+                return user
+
+            }
+            return null
+        }
+        return null;
+    } catch (err) {
+        return null;
+    }
+};
+
 const startServer = async () => {
 
     await server.start();
@@ -51,16 +75,9 @@ const startServer = async () => {
         express.json(),
         expressMiddleware(server, {
             context: async ({req, res}) => {
-                // token
-
-
-                return {
-                    authenticated: 'isAuthenticated',
-                    user: {
-                        id: 1,
-                        name: "Stole"
-                    }
-                }
+                const token = req.headers.authorization || '';
+                const user = await getUserFromToken(token.replace('Bearer ', ''));
+                return {user};
             }
         }),
     );
@@ -75,7 +92,7 @@ startServer().catch(error => {
 });
 
 
-function loggingMiddleware(req:Request, res:Response, next: NextFunction) {
+function loggingMiddleware(req: Request, res: Response, next: NextFunction) {
     console.log("ip:", req.ip)
 
     // check token and .....
